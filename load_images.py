@@ -14,6 +14,7 @@ np.random.seed(seed)
 # load training images and testing images
 X = []; Y = []
 X_test =[]; Y_test =[]
+count = np.zeros((7))
 
 for i in range(0,7):
     path = train_path+'/'+labels[i]
@@ -21,6 +22,7 @@ for i in range(0,7):
         img = plt.imread(path+'/'+j) #load images
         X.append(img)
         Y.append(i)
+        count[i]+=1
 
 for i in range(0,7):
     path = test_path+'/'+labels[i]
@@ -63,4 +65,5 @@ def getRGBDataset():
     
     return X_train_new, Y_train, X_validation_new, Y_validation, X_test_new, Y_test
     
-    
+def getDatasetCount():
+    return count
