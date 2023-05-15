@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import cv2
 
 # Some intializations
 data_dir = 'archive/'
@@ -47,3 +48,19 @@ Y_validation = new_Y[:index]
 
 def getDataset():
     return X_train, Y_train, X_validation, Y_validation, X_test, Y_test
+
+def convertToRGB(dataset):
+    temp = []
+    for i in dataset:
+        img = cv2.cvtColor(i,cv2.COLOR_GRAY2RGB)
+        temp.append(img)
+    return np.array(temp)
+
+def getRGBDataset():
+    X_train_new = convertToRGB(X_train)
+    X_validation_new = convertToRGB(X_validation)
+    X_test_new = convertToRGB(X_test)
+    
+    return X_train_new, Y_train, X_validation_new, Y_validation, X_test_new, Y_test
+    
+    
