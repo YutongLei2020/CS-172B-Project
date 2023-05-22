@@ -5,9 +5,9 @@ import cv2
 from sklearn.model_selection import train_test_split
 
 # Some intializations
-data_dir = 'archive/'
-train_path = data_dir + 'train/'
-test_path = data_dir + 'test/'
+data_dir = os.getcwd()
+train_path = data_dir + '/train'
+test_path = data_dir + '/test'
 labels = os.listdir(train_path)
 seed = 1234
 np.random.seed(seed)
