@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import cv2
+from sklearn.model_selection import train_test_split
 
 # Some intializations
 data_dir = 'archive/'
@@ -34,19 +35,7 @@ for i in range(0,7):
 X = np.array(X); Y = np.array(Y)
 X_test = np.array(X_test); Y_test = np.array(Y_test)
 
-# shuffle
-def unison_shuffled_copies(a, b):
-    assert len(a) == len(b)
-    p = np.random.permutation(len(a))
-    return a[p], b[p]
-new_X, new_Y = unison_shuffled_copies(X,Y)
-
-# splitting: 75% training data + 25% validation data
-index = len(new_X)//4 #28709//4 = 7177
-X_train = new_X[index:]
-Y_train = new_Y[index:]
-X_validation = new_X[:index]
-Y_validation = new_Y[:index]
+X_train,X_validation,Y_train,Y_validation = train_test_split(X,Y,test_size = 0.25, random_state = seed, shuffle = True, stratify = Y)
 
 def getDataset():
     return X_train, Y_train, X_validation, Y_validation, X_test, Y_test
