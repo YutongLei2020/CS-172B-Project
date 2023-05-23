@@ -57,9 +57,10 @@ def ResidualBlock(x, filters, kernel_size, weight_decay, downsample=True):
 def ResNet18(classes, input_shape, weight_decay=1e-4):
     input = Input(shape=input_shape)
     x = input
-    # x = conv2d_bn_relu(x, filters=64, kernel_size=(7, 7), weight_decay=weight_decay, strides=(2, 2))
-    # x = MaxPool2D(pool_size=(3, 3), strides=(2, 2),  padding='same')(x)
-    x = conv2d_bn_relu(x, filters=64, kernel_size=(3, 3), weight_decay=weight_decay, strides=(1, 1))
+#     x = conv2d_bn_relu(x, filters=64, kernel_size=(7, 7), weight_decay=weight_decay, strides=(2, 2)) # this is for real resnet18
+    x = conv2d_bn_relu(x, filters=64, kernel_size=(3, 3), weight_decay=weight_decay, strides=(2, 2))
+    x = MaxPool2D(pool_size=(3, 3), strides=(2, 2),  padding='same')(x)
+#     x = conv2d_bn_relu(x, filters=64, kernel_size=(3, 3), weight_decay=weight_decay, strides=(1, 1)) # this is random stuff
 
     # # conv 2
     x = ResidualBlock(x, filters=64, kernel_size=(3, 3), weight_decay=weight_decay, downsample=False)
@@ -73,7 +74,8 @@ def ResNet18(classes, input_shape, weight_decay=1e-4):
     # # conv 5
     x = ResidualBlock(x, filters=512, kernel_size=(3, 3), weight_decay=weight_decay, downsample=True)
     x = ResidualBlock(x, filters=512, kernel_size=(3, 3), weight_decay=weight_decay, downsample=False)
-    x = AveragePooling2D(pool_size=(4, 4), padding='valid')(x)
+#     x = AveragePooling2D(pool_size=(4, 4), padding='valid')(x) # this is for real resnet18 with inputsize 224x224
+    x = AveragePooling2D(pool_size=(2, 2), padding='valid')(x)
     x = Flatten()(x)
     x = Dense(classes, activation='softmax')(x)
     model = Model(input, x, name='ResNet18')
