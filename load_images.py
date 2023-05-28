@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import cv2
+import gc
 from sklearn.model_selection import train_test_split
 seed = 1234
 np.random.seed(seed)
@@ -60,6 +61,11 @@ for i in range(0,7):
 # shuffle
 X = np.array(X); Y = np.array(Y); X_test = np.array(X_test); Y_test = np.array(Y_test)
 X_train,X_validation,Y_train,Y_validation = train_test_split(X,Y,test_size = 0.25, random_state = seed, shuffle = True, stratify = Y)
+
+#freeing RAM
+del X
+del Y
+gc.collect()
 
 def getDataset():
     """Return np.arrays."""
